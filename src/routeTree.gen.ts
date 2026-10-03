@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as DocsSplatRouteImport } from './routes/docs/$'
+import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as _authSignInSplatRouteImport } from './routes/__auth/sign-in.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const DocsSplatRoute = DocsSplatRouteImport.update({
   path: '/docs/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsIndexRoute = ProductsIndexRouteImport.update({
+  id: '/products/',
+  path: '/products/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const _authSignInSplatRoute = _authSignInSplatRouteImport.update({
   id: '/__auth/sign-in/$',
   path: '/sign-in/$',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs/': typeof DocsIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/sign-in/$': typeof _authSignInSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs': typeof DocsIndexRoute
+  '/products': typeof ProductsIndexRoute
   '/sign-in/$': typeof _authSignInSplatRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,23 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs/': typeof DocsIndexRoute
+  '/products/': typeof ProductsIndexRoute
   '/__auth/sign-in/$': typeof _authSignInSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/docs/$' | '/docs/' | '/sign-in/$'
+  fullPaths: '/' | '/docs/$' | '/docs/' | '/products/' | '/sign-in/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs/$' | '/docs' | '/sign-in/$'
-  id: '__root__' | '/' | '/docs/$' | '/docs/' | '/__auth/sign-in/$'
+  to: '/' | '/docs/$' | '/docs' | '/products' | '/sign-in/$'
+  id:
+    '__root__' | '/' | '/docs/$' | '/docs/' | '/products/' | '/__auth/sign-in/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DocsSplatRoute: typeof DocsSplatRoute
   DocsIndexRoute: typeof DocsIndexRoute
+  ProductsIndexRoute: typeof ProductsIndexRoute
   _authSignInSplatRoute: typeof _authSignInSplatRoute
 }
 
@@ -92,6 +103,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/': {
+      id: '/products/'
+      path: '/products'
+      fullPath: '/products/'
+      preLoaderRoute: typeof ProductsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/__auth/sign-in/$': {
       id: '/__auth/sign-in/$'
       path: '/sign-in/$'
@@ -106,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DocsSplatRoute: DocsSplatRoute,
   DocsIndexRoute: DocsIndexRoute,
+  ProductsIndexRoute: ProductsIndexRoute,
   _authSignInSplatRoute: _authSignInSplatRoute,
 }
 export const routeTree = rootRouteImport
